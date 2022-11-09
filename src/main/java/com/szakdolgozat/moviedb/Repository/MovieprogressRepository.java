@@ -25,4 +25,6 @@ public interface MovieprogressRepository extends JpaRepository<Movieprogress, In
 
     Boolean existsByUserid_IdAndMovid(Integer id, Integer movid);
 
+    Movieprogress getByUserid_IdAndMovid(Integer id, Integer movid);
+
 }

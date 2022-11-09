@@ -179,15 +179,15 @@ public class MovieprogressController {
         movieprogressService.deleteMovieprogress(idDTO);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
-    @PutMapping("/updateFlag")
-    public ResponseEntity<?> updateFlag(@RequestBody MovieprogressDto movieprogressDto){
-        movieprogressService.updateMovieprogressFlag(movieprogressDto);
+    @PutMapping("/updateFlag/{userid}")
+    public ResponseEntity<?> updateFlag(@RequestBody MovieprogressDto movieprogressDto,@PathVariable Integer userid){
+        movieprogressService.updateMovieprogressFlag(movieprogressDto, userid);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/updateFav")
-    public ResponseEntity<?> updateFavFlag(@RequestBody MovieprogressDto movieprogressDto){
-        movieprogressService.updateMovieprogressFavFlag(movieprogressDto);
+    @PutMapping("/updateFav/{userid}")
+    public ResponseEntity<?> updateFavFlag(@RequestBody MovieprogressDto movieprogressDto, @PathVariable Integer userid){
+        movieprogressService.updateMovieprogressFavFlag(movieprogressDto, userid);
 
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
