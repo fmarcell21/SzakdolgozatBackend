@@ -19,6 +19,14 @@ public class Tvprogress {
     @Column(name = "flag", nullable = false)
     private Character flag;
 
+
+
+    @Column(name = "episodecount", nullable = false)
+    private Integer episodecount;
+
+    @Column(name = "seasoncount", nullable = false)
+    private Integer seasoncount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
     private User userid;
@@ -30,6 +38,8 @@ public class Tvprogress {
     public void setId(Integer id) {
         this.id = id;
     }
+
+
 
     public Integer getTvid() {
         return tvid;
@@ -57,6 +67,22 @@ public class Tvprogress {
 
     public User getUserid() {
         return userid;
+    }
+
+    public Integer getEpisodecount() {
+        return episodecount;
+    }
+
+    public void setEpisodecount(Integer episodecount) {
+        this.episodecount = episodecount;
+    }
+
+    public Integer getSeasoncount() {
+        return seasoncount;
+    }
+
+    public void setSeasoncount(Integer seasoncount) {
+        this.seasoncount = seasoncount;
     }
 
     public void setUserid(User userid) {

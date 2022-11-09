@@ -13,4 +13,6 @@ public class TvprogressDto implements Serializable {
     private final Integer tvid;
     private final Boolean favflag;
     private final Character flag;
+    private final Integer episodecount;
+    private final Integer seasoncount;
 }

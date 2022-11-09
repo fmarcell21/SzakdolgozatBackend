@@ -77,4 +77,11 @@ public class Movieprogress {
         this.userid = userid;
     }
 
+   /* public Movieprogress( Integer movid, Character flag ,Boolean favlag, User userid){
+        this.movid = movid;
+        this.flag = flag;
+        this.favflag = favlag;
+        this.userid = userid;
+    } */
+
 }

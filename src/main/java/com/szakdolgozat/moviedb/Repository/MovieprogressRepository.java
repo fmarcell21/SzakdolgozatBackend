@@ -18,6 +18,11 @@ public interface MovieprogressRepository extends JpaRepository<Movieprogress, In
 
    // List<Movieprogress> findMovieprogressesByMovid(Integer movid);
 
+   // Boolean existsByUserid_Id(Integer id);
+    Boolean existsByMovid(Integer id);
 
+    List<Movieprogress> findAllByUserid_IdAndFlag(Integer Id, Character flag);
+
+    Boolean existsByUserid_IdAndMovid(Integer id, Integer movid);
 
 }

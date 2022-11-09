@@ -60,6 +60,60 @@ public class MovieprogressController {
         return out;
     }
 
+
+    @GetMapping("/find/{userid}/flag/{flag}")
+    public List<Map<String, String>> getProgressByFlag(@PathVariable Integer userid, @PathVariable Character flag){
+        Character[] FlagVal = new Character[] {'P','W','D','F'};
+        List<Map<String,String>> out = new ArrayList<>();
+        if(flag == 'O'){
+            List<Movieprogress> movieprogressList = movieprogressRepository.findAllByUserid_Id(userid);
+
+
+            for(Movieprogress movieprogress : movieprogressList){
+                String id = movieprogress.getId().toString();
+
+                Boolean favflag = movieprogress.getFavflag();
+
+                Integer movieid = movieprogress.getMovid();
+
+                Map<String, String> map = new LinkedHashMap<>();
+                map.put("id",id);
+                if(favflag !=null){
+                    map.put("favflag",favflag.toString());
+                }
+
+                map.put("flag",(movieprogress.getFlag()).toString());
+                map.put("movieid",movieid.toString());
+
+                out.add(map);
+            }
+
+        } else if(Arrays.asList(FlagVal).contains(flag)){
+            List<Movieprogress> movieprogressList = movieprogressRepository.findAllByUserid_IdAndFlag(userid, flag);
+
+
+
+            for(Movieprogress movieprogress : movieprogressList){
+                String id = movieprogress.getId().toString();
+
+                Boolean favflag = movieprogress.getFavflag();
+
+                Integer movieid = movieprogress.getMovid();
+
+                Map<String, String> map = new LinkedHashMap<>();
+                map.put("id",id);
+                if(favflag !=null){
+                    map.put("favflag",favflag.toString());
+                }
+                map.put("flag",flag.toString());
+                map.put("movieid",movieid.toString());
+
+                out.add(map);
+            }
+        }
+        return out;
+    }
+
     @GetMapping("/find/{userid}/fav")
     public  List<Map<String,String>> getAllUserFav(@PathVariable Integer userid){
         List<Movieprogress> movieprogressList = movieprogressRepository.findAllByUserid_IdAndFavflag(userid, true);
@@ -85,12 +139,9 @@ public class MovieprogressController {
     }
     @GetMapping("/find/{userid}/{movid}")
     public List<Map<String, String>> getUserMovieStatus(@PathVariable Integer userid, @PathVariable Integer movid){
-        //Map<String, String> out = new HashMap<String, String>();
-       // Movieprogress movieprogress = movieprogressRepository.findMovieprogressByUserid_IdAndFavflagAndMovid(userid, true, movid);
-        //System.out.print(movieprogress);
-       // Map<String, String> map = new LinkedHashMap<>();
+
         List<Movieprogress> movieprogressList = movieprogressRepository.findAllByUserid_IdAndMovid(userid, movid);
-        //List<Movieprogress> movieprogressList = movieprogressRepository.findMovieprogressesByMovid(movid);
+
         List<Map<String,String>> out = new ArrayList<>();
 
         for(Movieprogress movieprogress : movieprogressList){
@@ -115,10 +166,22 @@ public class MovieprogressController {
         return out;
     }
 
+    @PostMapping("/{userid}/create")
+    public ResponseEntity<?> createMovieprogress(@RequestBody MovieprogressDto movieprogressDto, @PathVariable Integer userid){
+        movieprogressService.createMovieprogress(movieprogressDto, userid);
+
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/delete")
     public ResponseEntity<?> deleteMovieprogress(@RequestBody IdDTO idDTO){
         //System.out.println(idDTO);
         movieprogressService.deleteMovieprogress(idDTO);
+        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/updateFlag")
+    public ResponseEntity<?> updateFlag(@RequestBody MovieprogressDto movieprogressDto){
+        movieprogressService.updateMovieprogressFlag(movieprogressDto);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 
