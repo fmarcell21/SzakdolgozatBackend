@@ -19,7 +19,8 @@ import java.util.Arrays;
 public class MovieprogressService {
     @Autowired
     private MovieprogressRepository movieprogressRepository;
-    @Autowired UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public void deleteMovieprogress(IdDTO idDTO){
