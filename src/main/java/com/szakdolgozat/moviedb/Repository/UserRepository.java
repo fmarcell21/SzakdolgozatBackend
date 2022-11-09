@@ -1,5 +1,6 @@
 package com.szakdolgozat.moviedb.Repository;
 
+import com.szakdolgozat.moviedb.Entities.Movieprogress;
 import com.szakdolgozat.moviedb.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByEmail(String email);
 
     Boolean existsByUsername(String username);
-    //boolean isUsernameTaken(String username);
+
 
 
 

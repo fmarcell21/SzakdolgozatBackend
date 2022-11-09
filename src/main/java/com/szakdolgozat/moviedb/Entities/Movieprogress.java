@@ -1,6 +1,9 @@
 package com.szakdolgozat.moviedb.Entities;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "movieprogress")
@@ -22,6 +25,11 @@ public class Movieprogress {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
     private User userid;
+
+    public Movieprogress() {
+        super();
+    }
+
 
     public Integer getId() {
         return id;
@@ -60,6 +68,12 @@ public class Movieprogress {
     }
 
     public void setUserid(User userid) {
+        this.userid = userid;
+    }
+
+    public Movieprogress( Integer movid, Boolean favlag, User userid){
+        this.movid = movid;
+        this.favflag = favlag;
         this.userid = userid;
     }
 

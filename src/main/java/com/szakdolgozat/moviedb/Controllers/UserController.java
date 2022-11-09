@@ -2,6 +2,9 @@ package com.szakdolgozat.moviedb.Controllers;
 
 import com.szakdolgozat.moviedb.Entities.User;
 import com.szakdolgozat.moviedb.DTO.UserDto;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import com.szakdolgozat.moviedb.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 import com.szakdolgozat.moviedb.Mappers.UserMapper;
-
+import com.szakdolgozat.moviedb.Entities.Movieprogress;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.stream.Collectors;
 import com.szakdolgozat.moviedb.Service.UserService;
 
@@ -39,6 +43,7 @@ public class UserController {
                 .map(userMapper::userToUserDto)
                 .collect(Collectors.toList());
     }
+
     /*@GetMapping("/new")
     public UserDto saveUser(@RequestBody @NonNull @Valid UserDto userDto){
         User userEntity = userMapper.userDtoToUser(userDto);

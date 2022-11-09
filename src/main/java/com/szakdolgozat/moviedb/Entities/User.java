@@ -30,6 +30,10 @@ public class User {
     @OneToMany(mappedBy = "userid")
     private Set<Tvprogress> tvprogresses = new LinkedHashSet<>();
 
+    public User() {
+        super();
+    }
+
     public Integer getId() {
         return id;
     }
