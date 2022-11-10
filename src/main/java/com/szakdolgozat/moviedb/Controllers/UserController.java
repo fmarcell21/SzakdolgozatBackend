@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.util.Map;
 import java.util.stream.Collectors;
 import com.szakdolgozat.moviedb.Service.UserService;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 @RequestMapping("/api/users")
@@ -37,11 +38,20 @@ public class UserController {
     }
 
     @GetMapping("/find/{username}")
-    public List<UserDto> findByUsername(@PathVariable String username){
-        List<User> userList = userRepository.findByUsername(username);
-        return userList.stream()
-                .map(userMapper::userToUserDto)
-                .collect(Collectors.toList());
+    public Map<String, String> findByUsername(@PathVariable String username){
+        User existingUser = userRepository.findByUsername(username);
+        Map<String,String> map = new LinkedHashMap<>();
+
+        String Id = existingUser.getId().toString();
+        String Username = existingUser.getUsername();
+        String Email = existingUser.getEmail();
+
+        map.put("id", Id);
+        map.put("username", Username);
+        map.put("email", Email);
+
+        return map;
+
     }
 
     /*@GetMapping("/new")
@@ -74,12 +84,9 @@ public class UserController {
 
 
 
-    @PostMapping
-    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto){
-        userService.createUser(userDto);
 
-        return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-    }
+
+
 
 
 
