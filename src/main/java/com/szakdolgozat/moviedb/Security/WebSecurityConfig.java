@@ -50,26 +50,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.headers().frameOptions().disable();
         new CorsConfiguration().addAllowedOrigin("http://localhost:8080");
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-       /* http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/secure/**").permitAll()
-                .antMatchers("/api/movie/**").permitAll().and()
-                .antMatchers("/api/tv/**").permitAll().and()
-                .antMatchers("/api/person/**").permitAll().and()
-                .anyRequest().authenticated();
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);*/
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/secure/**").permitAll()
-                .antMatchers(("/api/movies/**")).permitAll()
+                .antMatchers(("/api/movie/**")).permitAll()
                 .antMatchers(("/api/tv/**")).permitAll()
                 .antMatchers(("/api/person/**")).permitAll()
-                //.antMatchers("/h2/**").permitAll()
+                .antMatchers(("/api/users/**")).permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+
 
 }
 
