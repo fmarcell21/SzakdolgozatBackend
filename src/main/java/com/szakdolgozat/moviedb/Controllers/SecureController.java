@@ -4,7 +4,10 @@ import com.szakdolgozat.moviedb.DTO.Security.Request.LoginRequest;
 import com.szakdolgozat.moviedb.DTO.Security.Request.RegisterRequest;
 import com.szakdolgozat.moviedb.DTO.Security.Response.JwtResponse;
 import com.szakdolgozat.moviedb.DTO.UserDto;
+import com.szakdolgozat.moviedb.Entities.ERole;
+import com.szakdolgozat.moviedb.Entities.Role;
 import com.szakdolgozat.moviedb.Entities.User;
+import com.szakdolgozat.moviedb.Repository.RoleRepository;
 import com.szakdolgozat.moviedb.Repository.UserRepository;
 import com.szakdolgozat.moviedb.Security.JwtUtils;
 import com.szakdolgozat.moviedb.Security.UserDetailsImplement;
@@ -25,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,7 +39,8 @@ public class SecureController {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder encoder;
     @Autowired
@@ -52,14 +58,20 @@ public class SecureController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-
+        System.out.println(SecurityContextHolder.getContext());
         System.out.println("JWT Token:"+jwt);
 
+
         UserDetailsImplement userDetails = (UserDetailsImplement) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getUser().getUsername(),
                 userDetails.getUser().getEmail(),
-                userDetails.getUser().getId()
+                userDetails.getUser().getId(),
+                roles
                 ));
     }
 
@@ -81,8 +93,13 @@ public class SecureController {
         newUser.setUsername(registerRequest.getUsername());
         newUser.setEmail(registerRequest.getEmail());
 
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+        newUser.setRoles(roles);
         newUser.setPassword(encoder.encode(registerRequest.getPassword()));
-        System.out.println("Teszt");
+
         userRepository.save(newUser);
 
 

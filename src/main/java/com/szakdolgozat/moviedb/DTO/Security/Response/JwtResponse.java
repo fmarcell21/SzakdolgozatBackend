@@ -1,17 +1,30 @@
 package com.szakdolgozat.moviedb.DTO.Security.Response;
 
+import java.util.List;
+
 public class JwtResponse {
     private String token;
     private String username;
     private String email;
     private Integer id;
 
-    public JwtResponse(String token, String username, String email, Integer id) {
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    private List<String> roles;
+
+    public JwtResponse(String token, String username, String email, Integer id, List<String> roles) {
 
         this.token = token;
         this.username = username;
         this.email = email;
         this.id = id;
+        this.roles = roles;
     }
 
     public String getToken() {

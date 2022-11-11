@@ -54,7 +54,7 @@ public class TvService {
     }
 
     public void updateTvprogressFlag(TvprogressDto tvprogressDto, Integer userid){
-        Character[] FlagVal = new Character[] {'P','W','D','F'};
+        Character[] FlagVal = new Character[] {'P','W','D','F', 'H'};
         if(tvRepository.existsByUserid_IdAndTvid(userid, tvprogressDto.getTvid())){
             if(Arrays.asList(FlagVal).contains(tvprogressDto.getFlag())){
 

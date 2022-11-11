@@ -181,6 +181,7 @@ public class MovieprogressController {
     }
     @PutMapping("/updateFlag/{userid}")
     public ResponseEntity<?> updateFlag(@RequestBody MovieprogressDto movieprogressDto,@PathVariable Integer userid){
+        System.out.println(movieprogressDto.getMovid());
         movieprogressService.updateMovieprogressFlag(movieprogressDto, userid);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }

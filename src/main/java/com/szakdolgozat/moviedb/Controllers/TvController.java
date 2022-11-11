@@ -62,7 +62,7 @@ public class TvController {
     }
     @GetMapping("/find/{userid}/flag/{flag}")
     public List<Map<String, String>> getProgressByFlag(@PathVariable Integer userid, @PathVariable Character flag){
-        Character[] FlagVal = new Character[] {'P','W','D','F'};
+        Character[] FlagVal = new Character[] {'P','W','D','F','H'};
         List<Map<String,String>> out = new ArrayList<>();
         if(flag == 'O'){
             List<Tvprogress> tvprogressList = tvRepository.findAllByUserid_Id(userid);

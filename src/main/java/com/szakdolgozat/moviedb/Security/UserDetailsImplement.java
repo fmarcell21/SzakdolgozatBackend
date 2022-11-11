@@ -1,11 +1,13 @@
 package com.szakdolgozat.moviedb.Security;
 import com.szakdolgozat.moviedb.Entities.User;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDetailsImplement implements UserDetails {
 
@@ -18,11 +20,6 @@ public class UserDetailsImplement implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImplement build(User user) {
-
-
-        return new UserDetailsImplement(user);
-    }
 
     public UserDetailsImplement(User user){
         this.user = user;
@@ -36,8 +33,17 @@ public class UserDetailsImplement implements UserDetails {
         this.user = user;
     }
 
+    public static UserDetailsImplement build(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
+
+        return new UserDetailsImplement(user, authorities);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return authorities;
     }
 
