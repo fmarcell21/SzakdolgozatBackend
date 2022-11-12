@@ -52,7 +52,43 @@ public class TvService {
         } else {System.out.println("Ez a user nem létezik");}
 
     }
+    public void updateTvprogressFavFlag(TvprogressDto tvprogressDto, Integer userid){
+        if(tvRepository.existsByTvid(tvprogressDto.getTvid())){
+            Tvprogress existingMP = tvRepository.getByUserid_IdAndTvid(userid,tvprogressDto.getTvid());
 
+
+            if(existingMP.getFavflag() == null){
+                existingMP.setFavflag(true);
+            } else if(existingMP.getFavflag() == false) {
+                existingMP.setFavflag(true);
+            } else if(existingMP.getFavflag() == true){
+                existingMP.setFavflag(false);
+            }
+
+            tvRepository.save(existingMP);
+        } else {
+            if(!tvRepository.existsByUserid_IdAndTvid(userid,tvprogressDto.getTvid())){
+                //System.out.println("Ez at szabad");
+                User user = userRepository.getById(userid);
+                Tvprogress newProgress = new Tvprogress();
+
+                newProgress.setTvid(tvprogressDto.getTvid());
+                newProgress.setFlag('O');
+                newProgress.setUserid(user);
+                newProgress.setEpisodecount(1);
+                newProgress.setSeasoncount(1);
+                newProgress.setFavflag(true);
+                newProgress.setId(tvprogressDto.getId());
+
+                tvRepository.save(newProgress);
+
+
+            } else { System.out.println("Ez a tvid már szerepel ennek a usernek a listájában"); }
+
+
+        }
+
+    }
     public void updateTvprogressFlag(TvprogressDto tvprogressDto, Integer userid){
         Character[] FlagVal = new Character[] {'P','W','D','F', 'H'};
         if(tvRepository.existsByUserid_IdAndTvid(userid, tvprogressDto.getTvid())){

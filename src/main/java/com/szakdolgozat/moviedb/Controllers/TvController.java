@@ -203,7 +203,7 @@ public class TvController {
 
     @PutMapping("/updateFav/{userid}")
     public ResponseEntity<?> updateFavFlag(@RequestBody TvprogressDto tvprogressDto, @PathVariable Integer userid){
-        tvService.updateTvprogressFlag(tvprogressDto, userid);
+        tvService.updateTvprogressFavFlag(tvprogressDto, userid);
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
     }
 

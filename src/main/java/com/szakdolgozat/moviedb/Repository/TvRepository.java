@@ -13,7 +13,7 @@ public interface TvRepository extends JpaRepository<Tvprogress, Integer> {
     List<Tvprogress> findAllByUserid_IdAndFavflag(Integer id, Boolean favflag);
 
     List<Tvprogress> findAllByUserid_IdAndTvid(Integer id, Integer tvid);
-
+    Boolean existsByTvid(Integer id);
     Boolean existsByUserid_IdAndTvid(Integer id, Integer tvid);
     Tvprogress getByUserid_IdAndTvid(Integer id, Integer tvid);
 }
