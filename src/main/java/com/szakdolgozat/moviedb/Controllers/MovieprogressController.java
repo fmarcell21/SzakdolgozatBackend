@@ -5,6 +5,7 @@ import com.szakdolgozat.moviedb.DTO.MovieprogressDto;
 import com.szakdolgozat.moviedb.DTO.UserDto;
 import com.szakdolgozat.moviedb.Entities.Movieprogress;
 
+import com.szakdolgozat.moviedb.Entities.Tvprogress;
 import com.szakdolgozat.moviedb.Entities.User;
 import com.szakdolgozat.moviedb.Repository.MovieprogressRepository;
 import com.szakdolgozat.moviedb.Service.MovieprogressService;
@@ -56,6 +57,48 @@ public class MovieprogressController {
 
             out.add(map);
         }
+
+        return out;
+    }
+
+    @GetMapping("/find/flagCount/{userid}")
+    public List<Map<String,String>> findFlagCountByUserid(@PathVariable Integer userid){
+        List<Movieprogress> movieprogressList = movieprogressRepository.findAllByUserid_Id(userid);
+        List<Map<String,String>> out = new ArrayList<>();
+        //{'P','W','D','F','H'};
+        Integer P= 0;
+        Integer W= 0;
+        Integer D= 0;
+        Integer All= 0;
+
+        for(Movieprogress movieprogress : movieprogressList){
+            switch (movieprogress.getFlag()){
+                case 'P':
+                    P += 1;
+                    break;
+                case 'W':
+                    W += 1;
+                    break;
+                case 'D':
+                    D += 1;
+                    break;
+
+                case 'O':
+                    All -= 1;
+                    break;
+            }
+            All +=1;
+
+
+        }
+        Map<String, String> map = new LinkedHashMap<>();
+
+        //map.put("userId",userId);
+        map.put("P",P.toString());
+        map.put("W",W.toString());
+        map.put("D",D.toString());
+        map.put("All", All.toString());
+        out.add(map);
 
         return out;
     }

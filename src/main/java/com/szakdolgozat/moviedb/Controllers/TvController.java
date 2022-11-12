@@ -60,6 +60,58 @@ public class TvController {
 
         return out;
     }
+
+    @GetMapping("/find/flagCount/{userid}")
+    public List<Map<String,String>> findFlagCountByUserid(@PathVariable Integer userid){
+        List<Tvprogress> tvprogressList = tvRepository.findAllByUserid_Id(userid);
+        List<Map<String,String>> out = new ArrayList<>();
+        //{'P','W','D','F','H'};
+        Integer P= 0;
+        Integer W= 0;
+        Integer D= 0;
+        Integer F= 0;
+        Integer H = 0;
+        Integer All= 0;
+
+        for(Tvprogress tvprogress : tvprogressList){
+            switch (tvprogress.getFlag()){
+                case 'P':
+                    P += 1;
+                    break;
+                case 'W':
+                    W += 1;
+                    break;
+                case 'D':
+                    D += 1;
+                    break;
+                case 'F':
+                    F += 1;
+                    break;
+                case 'H':
+                    H += 1;
+                    break;
+                case 'O':
+                    All -= 1;
+                    break;
+            }
+            All +=1;
+
+
+        }
+        Map<String, String> map = new LinkedHashMap<>();
+
+        //map.put("userId",userId);
+        map.put("P",P.toString());
+        map.put("W",W.toString());
+        map.put("D",D.toString());
+        map.put("F",F.toString());
+        map.put("H",H.toString());
+        map.put("All", All.toString());
+        out.add(map);
+
+        return out;
+    }
+
     @GetMapping("/find/{userid}/flag/{flag}")
     public List<Map<String, String>> getProgressByFlag(@PathVariable Integer userid, @PathVariable Character flag){
         Character[] FlagVal = new Character[] {'P','W','D','F','H'};
