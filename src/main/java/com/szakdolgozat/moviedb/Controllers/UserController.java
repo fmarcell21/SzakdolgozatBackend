@@ -24,13 +24,13 @@ import org.springframework.web.context.request.WebRequest;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
+    @Autowired
+    private  UserService userService;
     private final UserMapper userMapper;
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private  UserService userService;
+
 
     public UserController(UserMapper userMapper, UserRepository userRepository) {
         this.userMapper = userMapper;
